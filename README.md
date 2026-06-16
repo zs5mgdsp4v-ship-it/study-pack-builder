@@ -4,6 +4,8 @@
 
 `study-pack-builder` is a small Python CLI for turning study inputs into reusable learning packs.
 
+The first use case is English education in Korea, where private academies, test-prep programs, and classroom teachers repeatedly prepare vocabulary lists, memorization sheets, quizzes, answer keys, and printable review materials. The tool keeps that workflow local-first: teachers can start from CSV exports, OCR-cleaned word lists, or plain text notes and generate consistent study packs without uploading private class material to a hosted service.
+
 It currently supports:
 
 - CSV vocabulary files to Markdown study packs
@@ -13,6 +15,23 @@ It currently supports:
 - Print-friendly PDF lightening for pages with dark code blocks
 
 The project is early but intentionally structured for maintainable open-source development: tested commands, sample inputs, CI, contribution guidance, and a clear local-first security policy.
+
+## English Academy Workflow
+
+For an English academy or test-prep class, the intended workflow is:
+
+1. Export or clean a vocabulary list into CSV.
+2. Validate missing definitions and duplicate words.
+3. Generate a Markdown study pack for editing or printing.
+4. Create quiz drafts from class notes or reading passages.
+5. Keep outputs local so student or class material stays private.
+
+Example academy vocabulary input:
+
+```bash
+study-pack-builder validate examples/english_academy_vocab.csv
+study-pack-builder vocab examples/english_academy_vocab.csv --markdown outputs/academy-vocab-pack.md --title "English Academy Vocabulary Pack"
+```
 
 ## Install
 
@@ -32,6 +51,12 @@ Build a vocabulary study pack:
 
 ```bash
 study-pack-builder vocab examples/vocab.csv --markdown outputs/vocab-pack.md --title "Demo Vocabulary"
+```
+
+Build an English academy vocabulary pack:
+
+```bash
+study-pack-builder vocab examples/english_academy_vocab.csv --markdown outputs/academy-vocab-pack.md --title "English Academy Vocabulary Pack"
 ```
 
 Build a vocabulary study pack and PDF:
@@ -92,13 +117,14 @@ The next maintenance priorities are:
 
 - keep the CLI local-first and safe for private study materials
 - improve validation for OCR-derived CSV and TSV files
-- add richer answer-key and review-sheet generation
-- document each supported input format with a minimal sample
+- add richer answer-key and review-sheet generation for English academy classes
+- document supported input formats with English education examples
 - use CI to keep behavior stable across supported Python versions
 
 ## Roadmap
 
 - Add CSV validation reports for OCR cleanup workflows
 - Add answer-key generation for quiz drafts
-- Add richer PDF tables for large vocabulary packs
+- Add richer PDF tables for English vocabulary packs
+- Add review-sheet templates for school exams, CSAT prep, and language-test prep
 - Add optional AI-assisted summarization and question generation
