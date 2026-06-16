@@ -1,3 +1,3 @@
 """Tools for turning study inputs into review packs."""
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"

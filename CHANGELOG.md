@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.2 - 2026-06-16
+
+- Add teacher review answer-key tables for quiz drafts.
+- Add English academy lesson-note sample input.
+- Add Korean application copy in two tones for maintainer applications.
+- Expand CLI and quiz tests from 7 to 10 tests.
+- Close the roadmap issue for the English academy quiz answer-key workflow.
+
 ## 0.1.1 - 2026-06-16
 
 - Add CSV validation for missing words, missing definitions, and duplicate vocabulary entries.
