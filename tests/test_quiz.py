@@ -11,3 +11,5 @@ def test_build_quiz_template_uses_source_sentences() -> None:
     assert "Inheritance reuses behavior." in markdown
     assert "## Multiple Choice" in markdown
     assert "## OX" in markdown
+    assert "## Answer Key" in markdown
+    assert "- Q1:" in markdown

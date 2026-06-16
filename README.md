@@ -1,13 +1,18 @@
 # study-pack-builder
 
+[![CI](https://github.com/zs5mgdsp4v-ship-it/study-pack-builder/actions/workflows/ci.yml/badge.svg)](https://github.com/zs5mgdsp4v-ship-it/study-pack-builder/actions/workflows/ci.yml)
+
 `study-pack-builder` is a small Python CLI for turning study inputs into reusable learning packs.
 
 It currently supports:
 
 - CSV vocabulary files to Markdown study packs
+- Validation reports for vocabulary CSV files
 - Optional PDF output for vocabulary packs
 - Text files to quiz draft templates
 - Print-friendly PDF lightening for pages with dark code blocks
+
+The project is early but intentionally structured for maintainable open-source development: tested commands, sample inputs, CI, contribution guidance, and a clear local-first security policy.
 
 ## Install
 
@@ -41,6 +46,18 @@ Create a quiz draft from plain text:
 study-pack-builder quiz examples/concepts.txt --markdown outputs/quiz-draft.md --count 5
 ```
 
+Validate a vocabulary CSV before generating output:
+
+```bash
+study-pack-builder validate examples/vocab.csv
+```
+
+Example invalid CSV report:
+
+```bash
+study-pack-builder validate examples/invalid_vocab.csv
+```
+
 Lighten a PDF for printing:
 
 ```bash
@@ -68,6 +85,16 @@ python3 -m pytest
 ```
 
 The project uses a `src/` layout and keeps generated output out of version control.
+
+## Maintainer Focus
+
+The next maintenance priorities are:
+
+- keep the CLI local-first and safe for private study materials
+- improve validation for OCR-derived CSV and TSV files
+- add richer answer-key and review-sheet generation
+- document each supported input format with a minimal sample
+- use CI to keep behavior stable across supported Python versions
 
 ## Roadmap
 

@@ -5,6 +5,7 @@ from pathlib import Path
 
 from .pdf_tools import lighten_pdf
 from .quiz import build_quiz_template
+from .validate import format_issues, validate_vocab_csv
 from .vocab import load_vocab_csv, render_vocab_markdown, write_vocab_pdf
 
 
@@ -23,6 +24,9 @@ def main(argv: list[str] | None = None) -> int:
     quiz.add_argument("source", type=Path)
     quiz.add_argument("--markdown", type=Path, required=True)
     quiz.add_argument("--count", type=int, default=10)
+
+    validate = subparsers.add_parser("validate", help="Validate a vocabulary CSV before building.")
+    validate.add_argument("csv", type=Path)
 
     pdf = subparsers.add_parser("pdf-lighten", help="Lighten dark PDF blocks for printing.")
     pdf.add_argument("input_pdf", type=Path)
@@ -50,6 +54,11 @@ def main(argv: list[str] | None = None) -> int:
         args.markdown.parent.mkdir(parents=True, exist_ok=True)
         args.markdown.write_text(markdown, encoding="utf-8")
         return 0
+
+    if args.command == "validate":
+        issues = validate_vocab_csv(args.csv)
+        print(format_issues(issues), end="")
+        return 1 if issues else 0
 
     if args.command == "pdf-lighten":
         lighten_pdf(args.input_pdf, args.output_pdf, dpi=args.dpi)

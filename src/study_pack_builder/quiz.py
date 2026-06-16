@@ -34,6 +34,11 @@ def build_quiz_template(source: str, *, count: int = 10) -> str:
     for index, sentence in enumerate(sentences, 1):
         lines.extend([f"{index}. {sentence}", "", "Answer: O / X", ""])
 
+    lines.extend(["## Answer Key", ""])
+    for index, sentence in enumerate(sentences, 1):
+        lines.append(f"- Q{index}: Fill after review. Source: {sentence}")
+    lines.append("")
+
     return "\n".join(lines).rstrip() + "\n"
 
 
