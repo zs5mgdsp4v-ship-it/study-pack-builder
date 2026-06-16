@@ -16,6 +16,17 @@ It currently supports:
 
 The project is early but intentionally structured for maintainable open-source development: tested commands, sample inputs, CI, contribution guidance, and a clear local-first security policy.
 
+## Who This Helps
+
+- English academy teachers preparing weekly vocabulary packets and review quizzes
+- Test-prep instructors building school-exam, CSAT, TOEIC, or TOEFL practice material
+- Students who want structured recall sheets from CSV vocabulary notes
+- Education-content creators who need repeatable local tooling for study-pack generation
+
+## Current Status
+
+`study-pack-builder` is an early-stage maintained OSS project. The current release focuses on reliable local CLI workflows: vocabulary CSV validation, Markdown study-pack generation, quiz draft scaffolding, PDF output, examples, CI, issue templates, contribution guidance, and a security policy. The next planned work is tracked in GitHub issues and focuses on OCR cleanup, English academy answer keys, printable vocabulary tables, and level-specific review sheets.
+
 ## English Academy Workflow
 
 For an English academy or test-prep class, the intended workflow is:
@@ -32,6 +43,8 @@ Example academy vocabulary input:
 study-pack-builder validate examples/english_academy_vocab.csv
 study-pack-builder vocab examples/english_academy_vocab.csv --markdown outputs/academy-vocab-pack.md --title "English Academy Vocabulary Pack"
 ```
+
+See [docs/english-academy-workflow.md](docs/english-academy-workflow.md) for the workflow and [docs/sample-output.md](docs/sample-output.md) for example output.
 
 ## Install
 
