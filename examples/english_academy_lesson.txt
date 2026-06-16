@@ -1,0 +1,4 @@
+Students often memorize vocabulary faster when they see each word in a short sentence.
+Teachers can review the same vocabulary set with multiple-choice questions, OX questions, and recall checks.
+For test-prep classes, answer keys should be easy to inspect before the quiz is printed or shared.
+Local-first tools help academies prepare study material without uploading private class notes.

@@ -84,6 +84,12 @@ Create a quiz draft from plain text:
 study-pack-builder quiz examples/concepts.txt --markdown outputs/quiz-draft.md --count 5
 ```
 
+Create an English academy quiz draft with a teacher review answer key:
+
+```bash
+study-pack-builder quiz examples/english_academy_lesson.txt --markdown outputs/academy-quiz-draft.md --count 4
+```
+
 Validate a vocabulary CSV before generating output:
 
 ```bash

@@ -69,3 +69,38 @@ def test_cli_validate_reports_invalid_csv(tmp_path: Path) -> None:
     assert result.returncode == 1
     assert "duplicate-word" in result.stdout
     assert "missing-definition" in result.stdout
+
+
+def test_cli_quiz_writes_teacher_review_answer_key(tmp_path: Path) -> None:
+    source = tmp_path / "lesson.txt"
+    output = tmp_path / "quiz.md"
+    source.write_text(
+        "Students infer word meaning from context. Teachers review answer keys before class.",
+        encoding="utf-8",
+    )
+
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(Path(__file__).resolve().parents[1] / "src")
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "study_pack_builder",
+            "quiz",
+            str(source),
+            "--markdown",
+            str(output),
+            "--count",
+            "2",
+        ],
+        cwd=Path(__file__).resolve().parents[1],
+        text=True,
+        capture_output=True,
+        check=False,
+        env=env,
+    )
+
+    assert result.returncode == 0, result.stderr
+    markdown = output.read_text(encoding="utf-8")
+    assert "## Teacher Review Answer Key" in markdown
+    assert "| MC-1 | Multiple Choice | Students infer word meaning from context. |  |  |" in markdown
