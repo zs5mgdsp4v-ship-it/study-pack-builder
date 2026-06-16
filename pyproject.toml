@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "study-pack-builder"
+version = "0.1.0"
+description = "CLI tools for turning study inputs into vocabulary packs, quiz drafts, and print-friendly PDFs."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "study-pack-builder contributors" }]
+dependencies = []
+
+[project.optional-dependencies]
+pdf = ["reportlab>=4.0", "pymupdf>=1.24", "pillow>=10.0", "numpy>=1.26"]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+study-pack-builder = "study_pack_builder.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

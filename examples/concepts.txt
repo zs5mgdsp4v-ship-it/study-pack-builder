@@ -1,0 +1,3 @@
+Encapsulation protects internal state by exposing a small public interface.
+Inheritance lets one class reuse behavior from another class.
+Polymorphism lets different object types respond to the same method call in their own way.
