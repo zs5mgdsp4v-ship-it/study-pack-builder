@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.3 - 2026-06-18
+
+- Add `clean-ocr` command for converting OCR vocabulary text into CSV drafts.
+- Add English academy OCR sample input and OCR cleanup workflow documentation.
+- Connect OCR cleanup to validation and vocabulary pack generation workflows.
+- Expand tests from 10 to 13 tests.
+- Close the roadmap issue for OCR cleanup workflow.
+
 ## 0.1.2 - 2026-06-16
 
 - Add teacher review answer-key tables for quiz drafts.

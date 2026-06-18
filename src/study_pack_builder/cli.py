@@ -4,6 +4,7 @@ import argparse
 from pathlib import Path
 
 from .pdf_tools import lighten_pdf
+from .ocr import clean_ocr_text, write_ocr_csv
 from .quiz import build_quiz_template
 from .validate import format_issues, validate_vocab_csv
 from .vocab import load_vocab_csv, render_vocab_markdown, write_vocab_pdf
@@ -27,6 +28,10 @@ def main(argv: list[str] | None = None) -> int:
 
     validate = subparsers.add_parser("validate", help="Validate a vocabulary CSV before building.")
     validate.add_argument("csv", type=Path)
+
+    clean_ocr = subparsers.add_parser("clean-ocr", help="Convert OCR vocabulary text into a CSV draft.")
+    clean_ocr.add_argument("source", type=Path)
+    clean_ocr.add_argument("--csv", type=Path, required=True)
 
     pdf = subparsers.add_parser("pdf-lighten", help="Lighten dark PDF blocks for printing.")
     pdf.add_argument("input_pdf", type=Path)
@@ -59,6 +64,15 @@ def main(argv: list[str] | None = None) -> int:
         issues = validate_vocab_csv(args.csv)
         print(format_issues(issues), end="")
         return 1 if issues else 0
+
+    if args.command == "clean-ocr":
+        source = args.source.read_text(encoding="utf-8")
+        result = clean_ocr_text(source)
+        write_ocr_csv(result, args.csv)
+        print(f"Wrote {len(result.rows)} rows to {args.csv}")
+        for warning in result.warnings:
+            print(warning)
+        return 0
 
     if args.command == "pdf-lighten":
         lighten_pdf(args.input_pdf, args.output_pdf, dpi=args.dpi)

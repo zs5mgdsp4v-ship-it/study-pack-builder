@@ -9,6 +9,7 @@ The first use case is English education in Korea, where private academies, test-
 It currently supports:
 
 - CSV vocabulary files to Markdown study packs
+- OCR vocabulary text cleanup into CSV drafts
 - Validation reports for vocabulary CSV files
 - Optional PDF output for vocabulary packs
 - Text files to quiz draft templates
@@ -31,7 +32,7 @@ The project is early but intentionally structured for maintainable open-source d
 
 For an English academy or test-prep class, the intended workflow is:
 
-1. Export or clean a vocabulary list into CSV.
+1. Clean OCR vocabulary text into CSV, or start from an existing CSV.
 2. Validate missing definitions and duplicate words.
 3. Generate a Markdown study pack for editing or printing.
 4. Create quiz drafts from class notes or reading passages.
@@ -44,7 +45,15 @@ study-pack-builder validate examples/english_academy_vocab.csv
 study-pack-builder vocab examples/english_academy_vocab.csv --markdown outputs/academy-vocab-pack.md --title "English Academy Vocabulary Pack"
 ```
 
-See [docs/english-academy-workflow.md](docs/english-academy-workflow.md) for the workflow and [docs/sample-output.md](docs/sample-output.md) for example output.
+Example OCR cleanup workflow:
+
+```bash
+study-pack-builder clean-ocr examples/english_academy_ocr.txt --csv outputs/ocr-cleaned.csv
+study-pack-builder validate outputs/ocr-cleaned.csv
+study-pack-builder vocab outputs/ocr-cleaned.csv --markdown outputs/ocr-vocab-pack.md --title "OCR Cleaned Vocabulary Pack"
+```
+
+See [docs/english-academy-workflow.md](docs/english-academy-workflow.md), [docs/ocr-cleanup-workflow.md](docs/ocr-cleanup-workflow.md), and [docs/sample-output.md](docs/sample-output.md) for example workflows and output.
 
 ## Install
 
@@ -70,6 +79,12 @@ Build an English academy vocabulary pack:
 
 ```bash
 study-pack-builder vocab examples/english_academy_vocab.csv --markdown outputs/academy-vocab-pack.md --title "English Academy Vocabulary Pack"
+```
+
+Clean OCR vocabulary text into a CSV draft:
+
+```bash
+study-pack-builder clean-ocr examples/english_academy_ocr.txt --csv outputs/ocr-cleaned.csv
 ```
 
 Build a vocabulary study pack and PDF:
@@ -142,7 +157,7 @@ The next maintenance priorities are:
 
 ## Roadmap
 
-- Add CSV validation reports for OCR cleanup workflows
+- Improve OCR cleanup reports and row review UX
 - Add answer-key generation for quiz drafts
 - Add richer PDF tables for English vocabulary packs
 - Add review-sheet templates for school exams, CSAT prep, and language-test prep

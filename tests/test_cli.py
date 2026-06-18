@@ -104,3 +104,37 @@ def test_cli_quiz_writes_teacher_review_answer_key(tmp_path: Path) -> None:
     markdown = output.read_text(encoding="utf-8")
     assert "## Teacher Review Answer Key" in markdown
     assert "| MC-1 | Multiple Choice | Students infer word meaning from context. |  |  |" in markdown
+
+
+def test_cli_clean_ocr_writes_csv_and_reports_warnings(tmp_path: Path) -> None:
+    source = tmp_path / "ocr.txt"
+    output = tmp_path / "cleaned.csv"
+    source.write_text(
+        "1. analyze   examine carefully   examine; study   Students analyze text.\n"
+        "bad row\n",
+        encoding="utf-8",
+    )
+
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(Path(__file__).resolve().parents[1] / "src")
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "study_pack_builder",
+            "clean-ocr",
+            str(source),
+            "--csv",
+            str(output),
+        ],
+        cwd=Path(__file__).resolve().parents[1],
+        text=True,
+        capture_output=True,
+        check=False,
+        env=env,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert "Wrote 1 rows" in result.stdout
+    assert "line 2: skipped malformed OCR row" in result.stdout
+    assert output.read_text(encoding="utf-8").startswith("word,definition,synonyms,example\n")
