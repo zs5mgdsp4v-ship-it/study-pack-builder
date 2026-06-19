@@ -138,3 +138,42 @@ def test_cli_clean_ocr_writes_csv_and_reports_warnings(tmp_path: Path) -> None:
     assert "Wrote 1 rows" in result.stdout
     assert "line 2: skipped malformed OCR row" in result.stdout
     assert output.read_text(encoding="utf-8").startswith("word,definition,synonyms,example\n")
+
+
+def test_cli_review_sheet_writes_level_specific_markdown(tmp_path: Path) -> None:
+    source = tmp_path / "vocab.csv"
+    output = tmp_path / "review.md"
+    source.write_text(
+        "word,definition,synonyms,example\n"
+        "analyze,examine carefully,examine; study,Students analyze the passage.\n",
+        encoding="utf-8",
+    )
+
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(Path(__file__).resolve().parents[1] / "src")
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "study_pack_builder",
+            "review-sheet",
+            str(source),
+            "--markdown",
+            str(output),
+            "--level",
+            "test-prep",
+            "--title",
+            "Test Prep Review",
+        ],
+        cwd=Path(__file__).resolve().parents[1],
+        text=True,
+        capture_output=True,
+        check=False,
+        env=env,
+    )
+
+    assert result.returncode == 0, result.stderr
+    markdown = output.read_text(encoding="utf-8")
+    assert "# Test Prep Review" in markdown
+    assert "- Level: test-prep" in markdown
+    assert "## Synonym Match" in markdown

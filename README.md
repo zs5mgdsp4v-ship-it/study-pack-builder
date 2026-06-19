@@ -13,6 +13,7 @@ It currently supports:
 - Validation reports for vocabulary CSV files
 - Optional PDF output for vocabulary packs
 - Text files to quiz draft templates
+- Level-specific Markdown review sheets
 - Print-friendly PDF lightening for pages with dark code blocks
 
 The project is early but intentionally structured for maintainable open-source development: tested commands, sample inputs, CI, contribution guidance, and a clear local-first security policy.
@@ -105,6 +106,12 @@ Create an English academy quiz draft with a teacher review answer key:
 study-pack-builder quiz examples/english_academy_lesson.txt --markdown outputs/academy-quiz-draft.md --count 4
 ```
 
+Create a level-specific review sheet:
+
+```bash
+study-pack-builder review-sheet examples/english_academy_vocab.csv --markdown outputs/high-school-review.md --level high-school --title "High School Vocabulary Review"
+```
+
 Validate a vocabulary CSV before generating output:
 
 ```bash
@@ -151,14 +158,14 @@ The next maintenance priorities are:
 
 - keep the CLI local-first and safe for private study materials
 - improve validation for OCR-derived CSV and TSV files
-- add richer answer-key and review-sheet generation for English academy classes
+- improve review-sheet templates for English academy classes
 - document supported input formats with English education examples
 - use CI to keep behavior stable across supported Python versions
 
 ## Roadmap
 
 - Improve OCR cleanup reports and row review UX
-- Add answer-key generation for quiz drafts
+- Add richer answer explanations for quiz drafts
 - Add richer PDF tables for English vocabulary packs
-- Add review-sheet templates for school exams, CSAT prep, and language-test prep
+- Improve review-sheet templates for school exams, CSAT prep, and language-test prep
 - Add optional AI-assisted summarization and question generation

@@ -6,6 +6,7 @@ from pathlib import Path
 from .pdf_tools import lighten_pdf
 from .ocr import clean_ocr_text, write_ocr_csv
 from .quiz import build_quiz_template
+from .review_sheet import render_review_sheet
 from .validate import format_issues, validate_vocab_csv
 from .vocab import load_vocab_csv, render_vocab_markdown, write_vocab_pdf
 
@@ -32,6 +33,12 @@ def main(argv: list[str] | None = None) -> int:
     clean_ocr = subparsers.add_parser("clean-ocr", help="Convert OCR vocabulary text into a CSV draft.")
     clean_ocr.add_argument("source", type=Path)
     clean_ocr.add_argument("--csv", type=Path, required=True)
+
+    review_sheet = subparsers.add_parser("review-sheet", help="Build a level-specific vocabulary review sheet.")
+    review_sheet.add_argument("csv", type=Path)
+    review_sheet.add_argument("--markdown", type=Path, required=True)
+    review_sheet.add_argument("--level", choices=["middle-school", "high-school", "test-prep"], default="high-school")
+    review_sheet.add_argument("--title", default="Vocabulary Review Sheet")
 
     pdf = subparsers.add_parser("pdf-lighten", help="Lighten dark PDF blocks for printing.")
     pdf.add_argument("input_pdf", type=Path)
@@ -72,6 +79,13 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Wrote {len(result.rows)} rows to {args.csv}")
         for warning in result.warnings:
             print(warning)
+        return 0
+
+    if args.command == "review-sheet":
+        entries = load_vocab_csv(args.csv)
+        markdown = render_review_sheet(entries, title=args.title, level=args.level)
+        args.markdown.parent.mkdir(parents=True, exist_ok=True)
+        args.markdown.write_text(markdown, encoding="utf-8")
         return 0
 
     if args.command == "pdf-lighten":

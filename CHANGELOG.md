@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.4 - 2026-06-19
+
+- Add `review-sheet` command for level-specific English vocabulary review sheets.
+- Support `middle-school`, `high-school`, and `test-prep` templates.
+- Add review-sheet template documentation.
+- Expand tests from 13 to 16 tests.
+- Close the roadmap issue for level-specific review sheet templates.
+
 ## 0.1.3 - 2026-06-18
 
 - Add `clean-ocr` command for converting OCR vocabulary text into CSV drafts.
