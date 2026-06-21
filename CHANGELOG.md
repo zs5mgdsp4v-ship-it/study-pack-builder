@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.6 - 2026-06-21
+
+- Update GitHub Actions CI to install the `pdf` extra when running PDF table tests.
+- Keep printable PDF table coverage active across Python 3.10, 3.11, and 3.12.
+
 ## 0.1.5 - 2026-06-21
 
 - Add `vocab-table-pdf` command for compact printable vocabulary PDF tables.
