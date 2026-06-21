@@ -4,6 +4,7 @@ import argparse
 from pathlib import Path
 
 from .pdf_tools import lighten_pdf
+from .pdf_tables import build_printable_vocab_pdf
 from .ocr import clean_ocr_text, write_ocr_csv
 from .quiz import build_quiz_template
 from .review_sheet import render_review_sheet
@@ -44,6 +45,11 @@ def main(argv: list[str] | None = None) -> int:
     pdf.add_argument("input_pdf", type=Path)
     pdf.add_argument("output_pdf", type=Path)
     pdf.add_argument("--dpi", type=int, default=180)
+
+    table_pdf = subparsers.add_parser("vocab-table-pdf", help="Build a compact printable vocabulary table PDF.")
+    table_pdf.add_argument("csv", type=Path)
+    table_pdf.add_argument("output_pdf", type=Path)
+    table_pdf.add_argument("--title", default="Printable Vocabulary Table")
 
     args = parser.parse_args(argv)
 
@@ -90,6 +96,12 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "pdf-lighten":
         lighten_pdf(args.input_pdf, args.output_pdf, dpi=args.dpi)
+        return 0
+
+    if args.command == "vocab-table-pdf":
+        entries = load_vocab_csv(args.csv)
+        build_printable_vocab_pdf(entries, args.output_pdf, title=args.title)
+        print(f"Wrote printable PDF table to {args.output_pdf}")
         return 0
 
     parser.error(f"Unknown command: {args.command}")

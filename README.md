@@ -14,6 +14,7 @@ It currently supports:
 - Optional PDF output for vocabulary packs
 - Text files to quiz draft templates
 - Level-specific Markdown review sheets
+- Compact printable vocabulary PDF tables
 - Print-friendly PDF lightening for pages with dark code blocks
 
 The project is early but intentionally structured for maintainable open-source development: tested commands, sample inputs, CI, contribution guidance, and a clear local-first security policy.
@@ -94,6 +95,12 @@ Build a vocabulary study pack and PDF:
 study-pack-builder vocab examples/vocab.csv --markdown outputs/vocab-pack.md --pdf outputs/vocab-pack.pdf
 ```
 
+Build a compact printable vocabulary table PDF:
+
+```bash
+study-pack-builder vocab-table-pdf examples/english_academy_vocab.csv outputs/academy-vocab-table.pdf --title "English Academy Vocabulary Table"
+```
+
 Create a quiz draft from plain text:
 
 ```bash
@@ -166,6 +173,6 @@ The next maintenance priorities are:
 
 - Improve OCR cleanup reports and row review UX
 - Add richer answer explanations for quiz drafts
-- Add richer PDF tables for English vocabulary packs
+- Improve printable PDF table styling for larger English vocabulary packs
 - Improve review-sheet templates for school exams, CSAT prep, and language-test prep
 - Add optional AI-assisted summarization and question generation

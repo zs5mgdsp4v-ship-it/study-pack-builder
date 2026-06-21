@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.5 - 2026-06-21
+
+- Add `vocab-table-pdf` command for compact printable vocabulary PDF tables.
+- Add printable PDF table documentation.
+- Add PDF generation tests and CLI coverage.
+- Expand tests from 16 to 18 tests.
+- Close the roadmap issue for printable vocabulary PDF tables.
+
 ## 0.1.4 - 2026-06-19
 
 - Add `review-sheet` command for level-specific English vocabulary review sheets.

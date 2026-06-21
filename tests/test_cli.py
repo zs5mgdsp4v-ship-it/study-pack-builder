@@ -177,3 +177,37 @@ def test_cli_review_sheet_writes_level_specific_markdown(tmp_path: Path) -> None
     assert "# Test Prep Review" in markdown
     assert "- Level: test-prep" in markdown
     assert "## Synonym Match" in markdown
+
+
+def test_cli_vocab_table_pdf_writes_pdf(tmp_path: Path) -> None:
+    source = tmp_path / "vocab.csv"
+    output = tmp_path / "table.pdf"
+    source.write_text(
+        "word,definition,synonyms,example\n"
+        "analyze,examine carefully,examine; study,Students analyze the passage.\n",
+        encoding="utf-8",
+    )
+
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(Path(__file__).resolve().parents[1] / "src")
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "study_pack_builder",
+            "vocab-table-pdf",
+            str(source),
+            str(output),
+            "--title",
+            "Printable Table",
+        ],
+        cwd=Path(__file__).resolve().parents[1],
+        text=True,
+        capture_output=True,
+        check=False,
+        env=env,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert "Wrote printable PDF table" in result.stdout
+    assert output.read_bytes().startswith(b"%PDF")
